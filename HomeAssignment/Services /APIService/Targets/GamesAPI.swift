@@ -1,28 +1,21 @@
 import Foundation
 
-enum RickAndMortyAPI {
-
-    case getCharacter(id: Int)
-    case getAllCharacters(page: Int?)
-    case getLocation(id: Int)
+enum GamesAPI {
+    case getGames
 }
 
 // MARK: - TargetType
 
-extension RickAndMortyAPI: TargetType {
+extension GamesAPI: TargetType {
     
     var baseURL: URL {
-        return URL(string: "https://rickandmortyapi.com/api")!
+        return URL(string: "https://growthprodeus2.prod-cdn.clipro.tv/tests/mobile-task")!
     }
     
     var path: String {
         switch self {
-        case .getCharacter(let id):
-            return "/character/\(id)"
-        case .getAllCharacters:
-            return "/character"
-        case .getLocation(let id):
-            return "/location/\(id)"
+        case .getGames:
+            return "/games.json"
         }
     }
     
@@ -31,17 +24,7 @@ extension RickAndMortyAPI: TargetType {
     }
     
     var task: Task {
-        switch self {
-        case .getCharacter,
-             .getLocation:
-            return .requestPlain
-        case .getAllCharacters(let page):
-            if let page = page {
-                return .requestParameters(parameters: ["page": page], encoding: .url)
-            } else {
-                return .requestPlain
-            }
-        }
+        return .requestPlain
     }
     
     var headers: [String: String]? {

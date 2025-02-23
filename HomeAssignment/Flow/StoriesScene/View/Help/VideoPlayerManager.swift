@@ -1,22 +1,16 @@
-//
-//  VideoPlayerManagerDelegate.swift
-//  HomeAssignment
-//
-//  Created by Nareyko, Diana on 23.02.25.
-//
-
-
-protocol VideoPlayerManagerDelegate: AnyObject {
-    func videoDidFinishPlaying()
-    func videoProgressUpdated(progress: Double)
-}
+import AVFoundation
 
 final class VideoPlayerManager {
     
     weak var delegate: VideoPlayerManagerDelegate?
     private var player: AVPlayer?
-    private var playerLayer: AVPlayerLayer?
+    private(set) var playerLayer: AVPlayerLayer?
     private var timeObserver: Any?
+    
+    private enum Constants {
+
+        static let timeUpdateInterval: Double = 0.1
+    }
     
     var playerLayerInstance: AVPlayerLayer? {
         return playerLayer

@@ -1,21 +1,28 @@
+import SwiftUI
+
 struct LeagueSection: View {
-    let league: LeagueItem
-    @Binding var expandedLeague: Int?
     
+    let league: LeagueItem
+    @Binding var expandedLeagues: Set<Int>
+    let onMatchTap: (LeagueMatch) -> Void
+
+    private enum Constants {
+        static let spacing: CGFloat = 5
+        static let sectionBackground = Color.clear
+    }
+
     var body: some View {
         Section {
-            if expandedLeague == league.id {
-                ForEach(league.matches) { match in
-                    MatchRow(match: match)
-                        .padding(.vertical, 5)
-                        .listRowSeparator(.hidden) // ✅ Убираем разделитель
-                        .background(Color(.systemGray6)) // ✅ Серый фон
+            if expandedLeagues.contains(league.id) {
+                VStack(spacing: Constants.spacing) {
+                    ForEach(league.matches) { match in
+                        MatchRow(match: match, onTap: onMatchTap)
+                    }
                 }
             }
         } header: {
-            LeagueHeader(league: league, expandedLeague: $expandedLeague)
+            LeagueHeader(league: league, expandedLeagues: $expandedLeagues)
         }
-        .listRowInsets(.none) // ✅ Убираем лишние отступы
-        .background(Color.clear)
+        .listRowInsets(.none)
     }
 }

@@ -1,3 +1,5 @@
+import SwiftUI
+
 struct LeagueTitle: View {
     let name: String
     

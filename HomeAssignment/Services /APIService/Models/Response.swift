@@ -48,7 +48,6 @@ struct Fixture: Codable {
         self.referee = try container.decodeIfPresent(String.self, forKey: .referee)
         self.venue = try container.decode(Venue.self, forKey: .venue)
 
-        // Декодирование даты вручную
         let dateString = try container.decode(String.self, forKey: .date)
         let formatter = ISO8601DateFormatter()
         formatter.formatOptions = [.withInternetDateTime]

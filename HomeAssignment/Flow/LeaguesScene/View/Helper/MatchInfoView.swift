@@ -1,14 +1,19 @@
+import SwiftUI
+
 struct MatchInfoView: View {
-    let time: Date
     let score: String?
     let isLive: Bool
+    
+    private enum Constants {
+        static let scoreFont = Font.title2.bold()
+        static let liveFont = Font.subheadline.bold()
+        static let textColor = Color.gray
+        static let liveTextColor = Color.red
+        static let scoreColor = Color.black
+    }
 
     var body: some View {
         VStack {
-            Text(time, format: .dateTime.hour().minute())
-                .font(.subheadline)
-                .foregroundColor(Constants.textColor)
-
             if isLive {
                 Text("Started")
                     .font(.subheadline)

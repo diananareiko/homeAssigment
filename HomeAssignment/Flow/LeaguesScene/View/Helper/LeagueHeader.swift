@@ -1,32 +1,42 @@
+import SwiftUI
+
 struct LeagueHeader: View {
     let league: LeagueItem
-    @Binding var expandedLeague: Int?
-    
+    @Binding var expandedLeagues: Set<Int> // Используем множество
+
     var body: some View {
-        Button(action: {
-            withAnimation {
-                expandedLeague = expandedLeague == league.id ? nil : league.id
-            }
-        }) {
+        Button(action: toggleExpansion) {
             HStack {
-                KFImage(URL(string: league.logo))
-                    .resizable()
-                    .placeholder { ProgressView() }
-                    .scaledToFit()
-                    .frame(width: 30, height: 30)
-                    .clipShape(RoundedRectangle(cornerRadius: 5))
-
-                Text(league.name)
-                    .font(.headline)
-                    .foregroundColor(.primary)
-
+                Logo(url: league.logo)
+                LeagueTitle(name: league.name)
                 Spacer()
-                Image(systemName: expandedLeague == league.id ? "chevron.up" : "chevron.down")
+                ExpandIcon(isExpanded: expandedLeagues.contains(league.id)) // Исправлено
             }
             .padding()
-            .background(Color.white)
-            .cornerRadius(12)
-            .shadow(color: Color.black.opacity(0.1), radius: 3, x: 0, y: 2)
+            .background(backgroundStyle)
+            .contentShape(Rectangle())
         }
+        .buttonStyle(PlainButtonStyle())
+    }
+}
+
+// MARK: - Private Methods & Styles
+
+private extension LeagueHeader {
+
+    func toggleExpansion() {
+        withAnimation(.spring(response: 0.4, dampingFraction: 0.7)) {
+            if expandedLeagues.contains(league.id) {
+                expandedLeagues.remove(league.id)
+            } else {
+                expandedLeagues.insert(league.id)
+            }
+        }
+    }
+    
+    var backgroundStyle: some View {
+        RoundedRectangle(cornerRadius: 12)
+            .fill(Color(.systemBackground))
+            .shadow(color: Color.black.opacity(0.1), radius: 3, x: 0, y: 2)
     }
 }

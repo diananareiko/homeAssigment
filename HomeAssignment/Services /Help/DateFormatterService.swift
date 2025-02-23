@@ -1,8 +1,10 @@
 import Foundation
 
 struct DateFormatterService {
+
     private enum Constants {
-        static let inputFormat = "yyyy-MM-dd HH:mm:ss" // Формат входящей строки
+
+        static let inputFormat = "yyyy-MM-dd HH:mm:ss"
         static let locale = Locale(identifier: "en_US_POSIX")
     }
     

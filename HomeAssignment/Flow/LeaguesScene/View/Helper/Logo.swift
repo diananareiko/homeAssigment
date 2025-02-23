@@ -1,7 +1,7 @@
 import Kingfisher
 import SwiftUI
 
-struct LeagueLogo: View {
+struct Logo: View {
     let url: String
     
     private enum Constants {
